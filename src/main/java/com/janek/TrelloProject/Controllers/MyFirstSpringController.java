@@ -1,54 +1,123 @@
 package com.janek.TrelloProject.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@RestController("myTrello/")
 public class MyFirstSpringController {
 
-    @GetMapping("trello/members/me")
-    String me() throws Exception{
+    @Value("${trelloproject.key}")
+    private String key;
 
+    @Value("${trelloproject.token}")
+    private String token;
+
+    @Value("${trelloproject.base}")
+    private String trelloAPIBaseURL;
+
+    private String buildTrelloApiUrl(String trelloObjectGroup, String trelloObjectID, String trelloSecondaryObject){
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("key", "89b04a6238e8705a5fad7a5a3462a2f8");
-        parameters.put("token", "dbb7b0bef8bf41638301238d4702d28a3bc23fe79605e2775cbd1af3806243a4");
+        parameters.put("key", key);
+        parameters.put("token", token);
+        if(trelloSecondaryObject.equals("lists")){
+            parameters.put("lists", "all");
+        }
 
-        URL url = new URL("https://api.trello.com/1/members/me/?" + ParameterStringBuilder.getParamsString(parameters));
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(trelloAPIBaseURL);
+        stringBuilder.append("/");
+        stringBuilder.append(trelloObjectGroup);
+        stringBuilder.append("/");
+        stringBuilder.append(trelloObjectID);
+        if(trelloSecondaryObject != null){
+            stringBuilder.append("/");
+            stringBuilder.append(trelloSecondaryObject);
+        }
+        stringBuilder.append("?");
+        String paramsString = null;
+        try {
+            paramsString = ParameterStringBuilder.getParamsString(parameters);
+        } catch (Exception e){
 
-        int status = con.getResponseCode();
+        }
+        stringBuilder.append(paramsString);
+        return stringBuilder.toString();
+    }
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+    private HashMap<String,Object> getObjectHashMap(String trelloObjectGroup, String trelloObjectID, String trelloSecondaryObject){
+        URL url = null;
+        try{
+            url = new URL(buildTrelloApiUrl(trelloObjectGroup,trelloObjectID,trelloSecondaryObject));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        HttpURLConnection con = null;
+        try{
+            con = (HttpURLConnection) url.openConnection();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            con.setRequestMethod("GET");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        BufferedReader in = null;
+        try{
+            new BufferedReader(new InputStreamReader(con.getInputStream()));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         String inputLine;
         StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
+        try {
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
-        in.close();
+        try {
+            in.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+//
+//        HashMap<String, Object>[] resultArray = null;
+//        try {
+//            if (trelloSecondaryObject == null) {
+//                resultArray = new HashMap<String, Object>[];
+//                resultArray[0] = new ObjectMapper().readValue(content.toString(), HashMap.class);
+//            } else {
+//                resultArray = new ObjectMapper().readValue(content.toString(), HashMap[].class);
+//            }
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        return content.toString();
+        return null;
+    }
 
-        System.out.println(content);
+    @GetMapping("boards")
+    private String getAllMyBoards(){
+        //loop through boards
+        return null;
+    }
 
-        HashMap<String,Object> result =
-                new ObjectMapper().readValue(content.toString(), HashMap.class);
-
-        con.disconnect();
-
-        return content.toString();
+    @GetMapping("lists")
+    public String getAllMyLists(){
+        //loop through boards adding lists
+        return null;
     }
 
 }
