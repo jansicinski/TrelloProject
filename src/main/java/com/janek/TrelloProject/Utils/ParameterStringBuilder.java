@@ -1,4 +1,4 @@
-package com.janek.TrelloProject.Controllers;
+package com.janek.TrelloProject.Utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
