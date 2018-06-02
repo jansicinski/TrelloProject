@@ -1,53 +1,47 @@
 package com.janek.TrelloProject.Controllers;
 
 import com.janek.TrelloProject.Entities.Trelloboard;
+import com.janek.TrelloProject.Entities.Trellolist;
 import com.janek.TrelloProject.Repositories.TrelloboardRepository;
 import com.janek.TrelloProject.Utils.TrelloApi;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("TrelloApi/boards/")
 public class TrelloApiBoardController {
 
-    @Autowired
-    TrelloApi trelloApi;
+    private final TrelloApi trelloApi;
 
-    @Autowired
-    TrelloboardRepository trelloboardRepository;
+    private final TrelloboardRepository trelloboardRepository;
 
-    @PutMapping("{id}")
-    public String updateBoard(@PathVariable int id){
-        // TODO: 6/2/2018 PutMapping TrelloApiBoardController.updateBoard
-        return null;
-    }
-
-    @PostMapping("{description}")
-    public String createBoard(@PathVariable String description){
-        // TODO: 6/2/2018 PostMapping TrelloApiBoardController.createBoard
-        return null;
-    }
-
-    @DeleteMapping("{id}")
-    public String deleteBoard(@PathVariable int id){
-        // TODO: 6/2/2018 DeleteMapping TrelloApiBoardController.deleteBoard
-        return null;
-    }
-
-    @GetMapping("{id}")
-    public String getBoard(@PathVariable int id){
-        // TODO: 6/2/2018 GetMapping TrelloApiBoardController.getBoard
-        return null;
+    public TrelloApiBoardController(TrelloApi trelloApi, TrelloboardRepository trelloboardRepository) {
+        this.trelloApi = trelloApi;
+        this.trelloboardRepository = trelloboardRepository;
     }
 
     @PostMapping("saveAllToDb")
     public List<Trelloboard> saveAllBoardsToDb(){
         ArrayList<Trelloboard> boards = new ArrayList<>();
         for(String boardId : trelloApi.getMyBoardIds()){
-            boards.add(new Trelloboard(null,boardId,null));
+            Map<String, String> trelloListIds = trelloApi.getMyListIds()
+                                                            .entrySet()
+                                                            .stream()
+                                                            .filter(e -> e.getValue().equals(boardId))
+                                                            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+            List<Trellolist> trellolistsList = new ArrayList<>();
+            for(Map.Entry<String, String> listId : trelloListIds.entrySet()){
+                trellolistsList.add(new Trellolist(null, listId.getKey(), boardId, null, null));
+            }
+            boards.add(new Trelloboard(null,boardId,trellolistsList));
         }
         return trelloboardRepository.saveAll(boards);
     }

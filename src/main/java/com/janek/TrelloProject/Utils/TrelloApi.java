@@ -143,27 +143,27 @@ public class TrelloApi {
         return (ArrayList<String>)me.get("idBoards");
     }
 
-    public ArrayList<String> getMyListIds(){
-        ArrayList<String> myListIds = new ArrayList<>();
+    public Map<String, String> getMyListIds(){
+        Map<String, String> myListIds = new HashMap<>();
         for(String boardId : getMyBoardIds()){
             HashMap<String,Object>[] lists = getObjectHashMap(TrelloObjectGroup.BOARDS.toString().toLowerCase(),
-                    boardId,
-                    TrelloObjectId.LISTS.toString().toLowerCase());
+                                                              boardId,
+                                                              TrelloObjectId.LISTS.toString().toLowerCase());
             for(HashMap<String, Object> list : lists){
-                myListIds.add((String)list.get("id"));
+                myListIds.put((String)list.get("id"), boardId);
             }
         }
         return myListIds;
     }
 
-    public ArrayList<String> getMyCardIds(){
-        ArrayList<String> myCardIds = new ArrayList<>();
-        for(String listId : getMyListIds()){
+    public Map<String, String> getMyCardIds(){
+        Map<String, String> myCardIds = new HashMap<>();
+        for(Map.Entry<String, String> listId : getMyListIds().entrySet()){
             HashMap<String,Object>[] cards = getObjectHashMap(TrelloObjectGroup.LISTS.toString().toLowerCase(),
-                    listId,
-                    TrelloObjectId.CARDS.toString().toLowerCase());
+                                                              listId.getKey(),
+                                                              TrelloObjectId.CARDS.toString().toLowerCase());
             for(HashMap<String, Object> card : cards){
-                myCardIds.add((String)card.get("id"));
+                myCardIds.put((String)card.get("id"), listId.getKey());
             }
         }
         return myCardIds;

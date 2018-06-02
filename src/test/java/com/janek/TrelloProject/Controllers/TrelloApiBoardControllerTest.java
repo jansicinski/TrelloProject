@@ -1,8 +1,6 @@
 package com.janek.TrelloProject.Controllers;
 
 import com.janek.TrelloProject.Repositories.TrelloboardRepository;
-import com.janek.TrelloProject.Repositories.TrellocardRepository;
-import com.janek.TrelloProject.Repositories.TrellolistRepository;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Test;
@@ -22,12 +20,6 @@ public class TrelloApiBoardControllerTest {
 
     @Autowired
     TrelloboardRepository trelloboardRepository;
-
-    @Autowired
-    TrellolistRepository trellolistRepository;
-
-    @Autowired
-    TrellocardRepository trellocardRepository;
 
     @LocalServerPort
     private int port;
@@ -51,4 +43,5 @@ public class TrelloApiBoardControllerTest {
                 .body("message", containsString("teapot message"));
         //@formatter:on
     }
+
 }
