@@ -1,22 +1,22 @@
-CREATE TABLE `TrelloBoard` (
+CREATE TABLE `trelloboard` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  trello_id VARCHAR(50),
+  board_id VARCHAR(50),
   name varchar(50),
-  PRIMARY KEY (`db_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `TrelloList` (
+CREATE TABLE `trellolist` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  trello_id VARCHAR(50),
+  list_id VARCHAR(50),
   board_id int(10),
-  PRIMARY KEY (`db_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `TrelloCard` (
+CREATE TABLE `trellocard` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  trello_id VARCHAR(50),
+  card_id VARCHAR(50),
   list_id int(10),
-  PRIMARY KEY (`db_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

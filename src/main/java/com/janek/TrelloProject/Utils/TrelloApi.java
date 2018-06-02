@@ -1,6 +1,8 @@
 package com.janek.TrelloProject.Utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.janek.TrelloProject.Enums.TrelloObjectGroup;
+import com.janek.TrelloProject.Enums.TrelloObjectId;
 import com.janek.TrelloProject.Exceptions.NullTrelloObjectIdException;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +21,7 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PUBLIC) //PRIVATE
 @AllArgsConstructor
 @ToString
-public class TrelloAPI {
+public class TrelloApi {
     @Value("${trelloproject.key}")
     private  String key;
 
@@ -28,7 +31,7 @@ public class TrelloAPI {
     @Value("${trelloproject.base}")
     private  String trelloAPIBaseURL;
 
-    private  String buildTrelloApiUrl(String trelloObjectGroup, String trelloObjectId, String trelloSecondaryObject){
+    private String buildTrelloApiUrl(String trelloObjectGroup, String trelloObjectId, String trelloSecondaryObject){
         Map<String, String> parameters = new HashMap<>();
         parameters.put("key", key);
         parameters.put("token", token);
@@ -60,7 +63,7 @@ public class TrelloAPI {
         return stringBuilder.toString();
     }
 
-    public  HashMap<String,Object> getObjectHashMap(String trelloObjectGroup, String trelloSecondaryObject){
+    private HashMap<String,Object> getObjectHashMap(String trelloObjectGroup, String trelloSecondaryObject){
         HashMap<String, Object> result = null;
         String objectString = getObjectString(trelloObjectGroup,null,trelloSecondaryObject);
         try {
@@ -72,7 +75,7 @@ public class TrelloAPI {
         return result;
     }
 
-    private  String getObjectString (String trelloObjectGroup, String trelloObjectId, String trelloSecondaryObject){
+    private String getObjectString (String trelloObjectGroup, String trelloObjectId, String trelloSecondaryObject){
         URL url = null;
         try{
             url = new URL(buildTrelloApiUrl(trelloObjectGroup,trelloObjectId,trelloSecondaryObject));
@@ -115,7 +118,7 @@ public class TrelloAPI {
         return result;
     }
 
-    public  HashMap<String,Object>[] getObjectHashMap(String trelloObjectGroup, String trelloObjectId, String trelloSecondaryObject){
+    private HashMap<String,Object>[] getObjectHashMap(String trelloObjectGroup, String trelloObjectId, String trelloSecondaryObject){
         try {
             if (trelloObjectId == null || trelloObjectId.isEmpty()) {
                 throw new NullTrelloObjectIdException("trelloObjectId cannot be null!");
@@ -132,5 +135,37 @@ public class TrelloAPI {
         }
 
         return resultArray;
+    }
+
+    public ArrayList<String> getMyBoardIds(){
+        HashMap<String,Object> me = getObjectHashMap(TrelloObjectGroup.MEMBERS.toString().toLowerCase(),
+                TrelloObjectId.ME.toString().toLowerCase());
+        return (ArrayList<String>)me.get("idBoards");
+    }
+
+    public ArrayList<String> getMyListIds(){
+        ArrayList<String> myListIds = new ArrayList<>();
+        for(String boardId : getMyBoardIds()){
+            HashMap<String,Object>[] lists = getObjectHashMap(TrelloObjectGroup.BOARDS.toString().toLowerCase(),
+                    boardId,
+                    TrelloObjectId.LISTS.toString().toLowerCase());
+            for(HashMap<String, Object> list : lists){
+                myListIds.add((String)list.get("id"));
+            }
+        }
+        return myListIds;
+    }
+
+    public ArrayList<String> getMyCardIds(){
+        ArrayList<String> myCardIds = new ArrayList<>();
+        for(String listId : getMyListIds()){
+            HashMap<String,Object>[] cards = getObjectHashMap(TrelloObjectGroup.LISTS.toString().toLowerCase(),
+                    listId,
+                    TrelloObjectId.CARDS.toString().toLowerCase());
+            for(HashMap<String, Object> card : cards){
+                myCardIds.add((String)card.get("id"));
+            }
+        }
+        return myCardIds;
     }
 }

@@ -12,10 +12,9 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @ToString
 @Entity
-public class TrelloMe {
+public class Trellome {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-
 
 }
