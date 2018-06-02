@@ -8,6 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface TrelloboardRepository extends JpaRepository<Trelloboard, Long> {
-    Optional<Trelloboard> findByBoard_id(String board_id);
-    void deleteTrelloboardByBoard_id(String board_id);
+
+    Optional<Trelloboard> findByBoardId(String board_id);
+    void deleteTrelloboardByBoardId(String board_id);
+
 }

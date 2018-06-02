@@ -13,12 +13,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "trellocard")
 public class Trellocard {
-    @Id
-    String card_id;
 
-    String list_id;
+    @Id
+    @Column(name="card_id")
+    String cardId;
 
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="list_id")
     Trellolist trellolist;
+
 }

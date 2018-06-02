@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 public class ParameterStringBuilder {
+
     public static String getParamsString(Map<String, String> params)
             throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
@@ -21,4 +22,5 @@ public class ParameterStringBuilder {
                 ? resultString.substring(0, resultString.length() - 1)
                 : resultString;
     }
+
 }

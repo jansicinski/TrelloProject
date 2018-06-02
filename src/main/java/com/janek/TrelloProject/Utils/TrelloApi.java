@@ -22,6 +22,7 @@ import java.util.Map;
 @AllArgsConstructor
 @ToString
 public class TrelloApi {
+
     @Value("${trelloproject.key}")
     private  String key;
 
@@ -168,4 +169,5 @@ public class TrelloApi {
         }
         return myCardIds;
     }
+
 }

@@ -14,10 +14,10 @@ import java.util.List;
 @Entity
 @Table(name = "trellolist")
 public class Trellolist {
-    @Id
-    String list_id;
 
-    String board_id;
+    @Id
+    @Column(name="list_id")
+    String listId;
 
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="board_id")
@@ -33,4 +33,5 @@ public class Trellolist {
         trellocards.add(tempCard);
         tempCard.setTrellolist(this);
     }
+
 }

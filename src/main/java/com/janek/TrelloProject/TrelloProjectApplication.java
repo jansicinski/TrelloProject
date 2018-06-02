@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TrelloProjectApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(TrelloProjectApplication.class, args);
+
 	}
+
 }

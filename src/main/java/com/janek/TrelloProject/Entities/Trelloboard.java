@@ -13,8 +13,10 @@ import java.util.List;
 @Entity
 @Table(name = "trelloboard")
 public class Trelloboard {
+
     @Id
-    String board_id;
+    @Column(name="board_id")
+    String boardId;
 
     @OneToMany(mappedBy="trelloboard", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     List<Trellolist> trellolists;
@@ -26,4 +28,5 @@ public class Trelloboard {
         trellolists.add(tempList);
         tempList.setTrelloboard(this);
     }
+
 }
