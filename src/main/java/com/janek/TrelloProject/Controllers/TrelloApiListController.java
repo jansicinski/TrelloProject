@@ -1,5 +1,6 @@
 package com.janek.TrelloProject.Controllers;
 
+import com.janek.TrelloProject.Repositories.TrellolistRepository;
 import com.janek.TrelloProject.Utils.TrelloApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,9 @@ public class TrelloApiListController {
 
     @Autowired
     TrelloApi trelloApi;
+
+    @Autowired
+    TrellolistRepository trellolistRepository;
 
     @PostMapping("saveAllToDb")
     public String saveAllListsToDb(){

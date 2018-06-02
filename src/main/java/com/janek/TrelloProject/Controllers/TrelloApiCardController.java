@@ -1,5 +1,6 @@
 package com.janek.TrelloProject.Controllers;
 
+import com.janek.TrelloProject.Repositories.TrellocardRepository;
 import com.janek.TrelloProject.Utils.TrelloApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,9 @@ public class TrelloApiCardController {
 
     @Autowired
     TrelloApi trelloApi;
+
+    @Autowired
+    TrellocardRepository trellocardRepository;
 
     @PutMapping("{id}")
     public String updateCard(@PathVariable int id){
