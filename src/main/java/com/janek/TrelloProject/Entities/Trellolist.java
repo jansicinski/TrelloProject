@@ -15,9 +15,6 @@ import java.util.List;
 @Table(name = "trellolist")
 public class Trellolist {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-
     String list_id;
 
     String board_id;

@@ -14,9 +14,6 @@ import java.util.List;
 @Table(name = "trelloboard")
 public class Trelloboard {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-
     String board_id;
 
     @OneToMany(mappedBy="trelloboard", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})

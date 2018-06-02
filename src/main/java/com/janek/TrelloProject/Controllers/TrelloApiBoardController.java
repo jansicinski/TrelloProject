@@ -39,9 +39,9 @@ public class TrelloApiBoardController {
                                                             .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
             List<Trellolist> trellolistsList = new ArrayList<>();
             for(Map.Entry<String, String> listId : trelloListIds.entrySet()){
-                trellolistsList.add(new Trellolist(null, listId.getKey(), boardId, null, null));
+                trellolistsList.add(new Trellolist(listId.getKey(), boardId, null, null));
             }
-            boards.add(new Trelloboard(null,boardId,trellolistsList));
+            boards.add(new Trelloboard(boardId,trellolistsList));
         }
         return trelloboardRepository.saveAll(boards);
     }
@@ -50,7 +50,7 @@ public class TrelloApiBoardController {
     public List<Trelloboard> getAllMyBoards(){
         ArrayList<Trelloboard> boards = new ArrayList<>();
         for(String boardId : trelloApi.getMyBoardIds()){
-            boards.add(new Trelloboard(null,boardId,null));
+            boards.add(new Trelloboard(boardId,null));
         }
         return boards;
     }
