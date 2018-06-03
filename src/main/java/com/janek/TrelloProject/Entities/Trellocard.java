@@ -1,6 +1,7 @@
 package com.janek.TrelloProject.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Trellocard {
     @Column(name="card_id")
     String cardId;
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="list_id")
     Trellolist trellolist;

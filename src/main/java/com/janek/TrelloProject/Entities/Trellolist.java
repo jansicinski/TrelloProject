@@ -1,5 +1,7 @@
 package com.janek.TrelloProject.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,10 +22,12 @@ public class Trellolist {
     @Column(name="list_id")
     String listId;
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="board_id")
     Trelloboard trelloboard;
 
+    @JsonManagedReference
     @OneToMany(mappedBy="trellolist", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     List<Trellocard> trellocards;
 

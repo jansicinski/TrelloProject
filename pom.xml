@@ -21,7 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.9</java.version>
 	</properties>
 
 	<dependencies>
@@ -81,6 +81,12 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+
+		<dependency>
+			<groupId>com.zenjava</groupId>
+			<artifactId>javafx-maven-plugin</artifactId>
+			<version>1.5</version>
+		</dependency>
 
     </dependencies>
 

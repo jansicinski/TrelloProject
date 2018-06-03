@@ -1,9 +1,9 @@
 package com.janek.TrelloProject.Utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.janek.TrelloProject.Enums.TrelloObjectGroup;
-import com.janek.TrelloProject.Enums.TrelloObjectId;
+import com.janek.TrelloProject.Enums.TrelloObject;
 import com.janek.TrelloProject.Exceptions.NullTrelloObjectIdException;
+import javafx.util.Pair;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.janek.TrelloProject.Enums.TrelloObject.*;
 
 @Component
 @Getter
@@ -36,8 +38,10 @@ public class TrelloApi {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("key", key);
         parameters.put("token", token);
-        if(trelloSecondaryObject.equals("lists")){
-            parameters.put("lists", "all");
+        if(trelloSecondaryObject != null) {
+            if (trelloSecondaryObject.equals("lists")) {
+                parameters.put("lists", "all");
+            }
         }
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -64,9 +68,25 @@ public class TrelloApi {
         return stringBuilder.toString();
     }
 
-    private HashMap<String,Object> getObjectHashMap(String trelloObjectGroup, String trelloSecondaryObject){
+    private HashMap<String,Object> getObjectHashMap(TrelloObject trelloObjectGroup, TrelloObject trelloSecondaryObject){
         HashMap<String, Object> result = null;
-        String objectString = getObjectString(trelloObjectGroup,null,trelloSecondaryObject);
+        String objectString = getObjectString(trelloObjectGroup.toString().toLowerCase(),
+                                   null,
+                                              trelloSecondaryObject.toString().toLowerCase());
+        try {
+            result = new ObjectMapper().readValue(objectString, HashMap.class);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    private HashMap<String,Object> getObjectHashMap(TrelloObject trelloObjectGroup, String trelloObjectId){
+        HashMap<String, Object> result = null;
+        String objectString = getObjectString(trelloObjectGroup.toString().toLowerCase(),
+                trelloObjectId,
+                null);
         try {
             result = new ObjectMapper().readValue(objectString, HashMap.class);
         } catch (Exception e){
@@ -119,9 +139,9 @@ public class TrelloApi {
         return result;
     }
 
-    private HashMap<String,Object>[] getObjectHashMap(String trelloObjectGroup, String trelloObjectId, String trelloSecondaryObject){
+    private HashMap<String,Object>[] getObjectHashMap(TrelloObject trelloObjectGroup, String trelloObjectId, TrelloObject trelloSecondaryObject){
         try {
-            if (trelloObjectId == null || trelloObjectId.isEmpty()) {
+            if (trelloObjectId == null) {
                 throw new NullTrelloObjectIdException("trelloObjectId cannot be null!");
             }
         } catch (NullTrelloObjectIdException e){
@@ -130,7 +150,10 @@ public class TrelloApi {
 
         HashMap<String, Object>[] resultArray = null;
         try {
-            resultArray = new ObjectMapper().readValue(getObjectString(trelloObjectGroup,trelloObjectId,trelloSecondaryObject), HashMap[].class);
+            resultArray = new ObjectMapper().readValue(getObjectString(trelloObjectGroup.toString().toLowerCase(),
+                                                                       trelloObjectId,
+                                                                       trelloSecondaryObject.toString().toLowerCase()),
+                                                                       HashMap[].class);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -138,20 +161,23 @@ public class TrelloApi {
         return resultArray;
     }
 
-    public ArrayList<String> getMyBoardIds(){
-        HashMap<String,Object> me = getObjectHashMap(TrelloObjectGroup.MEMBERS.toString().toLowerCase(),
-                TrelloObjectId.ME.toString().toLowerCase());
-        return (ArrayList<String>)me.get("idBoards");
+    public ArrayList<Pair<String, String>> getMyBoardIds(){
+        HashMap<String,Object> me = getObjectHashMap(MEMBERS,ME);
+        ArrayList<String> boardIds = (ArrayList<String>)me.get("idBoards");
+        ArrayList<Pair<String, String>> result = new ArrayList<>();
+        for(String boardId : boardIds){
+            result.add(new Pair<>(boardId, (String) getObjectHashMap(BOARDS, boardId).get("name") ));
+        }
+
+        return result;
     }
 
     public Map<String, String> getMyListIds(){
         Map<String, String> myListIds = new HashMap<>();
-        for(String boardId : getMyBoardIds()){
-            HashMap<String,Object>[] lists = getObjectHashMap(TrelloObjectGroup.BOARDS.toString().toLowerCase(),
-                                                              boardId,
-                                                              TrelloObjectId.LISTS.toString().toLowerCase());
+        for(Pair<String, String> boardId : getMyBoardIds()){
+            HashMap<String,Object>[] lists = getObjectHashMap(BOARDS,boardId.getKey(),LISTS);
             for(HashMap<String, Object> list : lists){
-                myListIds.put((String)list.get("id"), boardId);
+                myListIds.put((String)list.get("id"), boardId.getKey());
             }
         }
         return myListIds;
@@ -160,9 +186,7 @@ public class TrelloApi {
     public Map<String, String> getMyCardIds(){
         Map<String, String> myCardIds = new HashMap<>();
         for(Map.Entry<String, String> listId : getMyListIds().entrySet()){
-            HashMap<String,Object>[] cards = getObjectHashMap(TrelloObjectGroup.LISTS.toString().toLowerCase(),
-                                                              listId.getKey(),
-                                                              TrelloObjectId.CARDS.toString().toLowerCase());
+            HashMap<String,Object>[] cards = getObjectHashMap(LISTS,listId.getKey(),CARDS);
             for(HashMap<String, Object> card : cards){
                 myCardIds.put((String)card.get("id"), listId.getKey());
             }
