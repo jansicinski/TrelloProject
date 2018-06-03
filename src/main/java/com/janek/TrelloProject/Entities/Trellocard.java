@@ -20,7 +20,7 @@ public class Trellocard {
     String cardId;
 
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name="list_id")
     Trellolist trellolist;
 
