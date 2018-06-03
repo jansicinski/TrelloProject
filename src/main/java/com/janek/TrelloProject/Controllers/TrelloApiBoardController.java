@@ -38,7 +38,7 @@ public class TrelloApiBoardController {
     public List<Trelloboard> getAllMyBoards(){
         ArrayList<Trelloboard> boards = new ArrayList<>();
         for(Pair<String, String>  boardId : trelloApi.getMyBoardIds()){
-            boards.add(Trelloboard.builder().boardId(boardId.getKey()).build());
+            boards.add(Trelloboard.builder().boardId(boardId.getKey()).name(boardId.getValue()).build());
         }
         return boards;
     }

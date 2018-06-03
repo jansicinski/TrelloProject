@@ -6,8 +6,7 @@ public enum  TrelloObject {
     CARDS("cards"),
     LISTS("lists"),
     BOARDS("boards"),
-    ME("me"),
-    NAME("name");
+    ME("me");
 
     private final String objectName;
 

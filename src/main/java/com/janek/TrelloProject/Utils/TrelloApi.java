@@ -139,7 +139,9 @@ public class TrelloApi {
         return result;
     }
 
-    private HashMap<String,Object>[] getObjectHashMap(TrelloObject trelloObjectGroup, String trelloObjectId, TrelloObject trelloSecondaryObject){
+    private HashMap<String,Object>[] getObjectHashMap(TrelloObject trelloObjectGroup,
+                                                      String trelloObjectId,
+                                                      TrelloObject trelloSecondaryObject){
         try {
             if (trelloObjectId == null) {
                 throw new NullTrelloObjectIdException("trelloObjectId cannot be null!");

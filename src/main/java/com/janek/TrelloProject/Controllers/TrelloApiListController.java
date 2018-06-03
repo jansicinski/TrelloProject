@@ -23,7 +23,9 @@ public class TrelloApiListController {
 
     private final TrellolistRepository trellolistRepository;
 
-    public TrelloApiListController(TrelloApi trelloApi, TrellolistRepository trellolistRepository, TrelloboardRepository trelloboardRepository) {
+    public TrelloApiListController(TrelloApi trelloApi,
+                                   TrellolistRepository trellolistRepository,
+                                   TrelloboardRepository trelloboardRepository) {
         this.trelloApi = trelloApi;
         this.trellolistRepository = trellolistRepository;
         this.trelloboardRepository = trelloboardRepository;

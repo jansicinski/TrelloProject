@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -25,7 +27,7 @@ public class TrelloApiBoardControllerTest {
     private int port;
 
     @Test
-    public void shouldReturnMyBoards(){
+    public void shouldGetAllMyBoards(){
         // TODO: 6/2/2018 TrelloApiControllerTest shouldReturnMyBoards
         //@formatter:off
         RequestSpecification given = given()
@@ -39,9 +41,14 @@ public class TrelloApiBoardControllerTest {
         when.then()
                 .log().all()
                 .assertThat()
-                .statusCode(HttpStatus.I_AM_A_TEAPOT.value())
-                .body("message", containsString("teapot message"));
+                .statusCode(HttpStatus.OK.value())
+                .body("name", hasItems("x", "TRNTL", "Przyjaciel SME", "Welcome Board", "Members", "Notes - devs only"));
         //@formatter:on
+    }
+
+    @Test
+    public void shouldSaveAllBoardsToDb(){
+
     }
 
 }
