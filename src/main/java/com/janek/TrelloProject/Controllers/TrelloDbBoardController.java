@@ -1,44 +1,41 @@
 package com.janek.TrelloProject.Controllers;
 
 import com.janek.TrelloProject.Entities.Trelloboard;
-import com.janek.TrelloProject.Repositories.TrelloboardRepository;
+import com.janek.TrelloProject.Services.TrelloboardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("TrelloDb/boards/")
 public class TrelloDbBoardController {
 
-    private final TrelloboardRepository trelloboardRepository;
+    private final TrelloboardService trelloboardService;
 
-    public TrelloDbBoardController(TrelloboardRepository trelloboardRepository) {
-        this.trelloboardRepository = trelloboardRepository;
+    public TrelloDbBoardController(TrelloboardService trelloboardService) {
+        this.trelloboardService = trelloboardService;
     }
 
     @PutMapping("")
     public ResponseEntity<Trelloboard> updateBoard(@RequestBody Trelloboard trelloboard){
-        trelloboard = trelloboardRepository.save(trelloboard);
-        Optional<Trelloboard> trelloboardOptional = trelloboardRepository.findByBoardId(trelloboard.getBoardId());
-        if (trelloboardOptional.isPresent()) {
-            return ResponseEntity.ok().body(trelloboardOptional.get());
+        trelloboard = trelloboardService.update(trelloboard);
+        if (trelloboard != null) {
+            return ResponseEntity.ok().body(trelloboard);
         } else
             return ResponseEntity.notFound().build();
     }
 
     @PostMapping("")
     public ResponseEntity<Trelloboard> createBoard(@RequestBody Trelloboard trelloboard){
-        trelloboard = trelloboardRepository.save(trelloboard);
+        trelloboard = trelloboardService.create(trelloboard);
         return ResponseEntity.created(URI.create("localhost:8080/TrelloDb/cards/" + trelloboard.getBoardId())).build();
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Trelloboard>  deleteBoard(@PathVariable String id){
-        if(trelloboardRepository.findByBoardId(id).isPresent()) {
-            trelloboardRepository.deleteTrelloboardByBoardId(id);
+    public ResponseEntity<Void>  deleteBoard(@PathVariable String id){
+        if(trelloboardService.delete(id)) {
             return ResponseEntity.noContent().build();
         } else
             return ResponseEntity.notFound().build();
@@ -46,17 +43,17 @@ public class TrelloDbBoardController {
 
     @GetMapping("{id}")
     public ResponseEntity<Trelloboard> getBoard(@PathVariable String id){
-        Optional<Trelloboard> trelloboardOptional = trelloboardRepository.findByBoardId(id);
-        if (trelloboardOptional.isPresent()) {
-            return ResponseEntity.ok().body(trelloboardOptional.get());
+        Trelloboard trelloboard = trelloboardService.read(id);
+        if (trelloboard != null) {
+            return ResponseEntity.ok().body(trelloboard);
         } else
             return ResponseEntity.notFound().build();
     }
 
     @GetMapping("")
     public ResponseEntity<List<Trelloboard>> getAllMyBoards(){
-        List<Trelloboard> trelloboards = trelloboardRepository.findAll();
-        if (trelloboards.size() > 0) {
+        List<Trelloboard> trelloboards = trelloboardService.read();
+        if (trelloboards != null) {
             return ResponseEntity.ok().body(trelloboards);
         } else
             return ResponseEntity.notFound().build();
