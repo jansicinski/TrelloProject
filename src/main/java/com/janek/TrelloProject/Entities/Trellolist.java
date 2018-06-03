@@ -6,11 +6,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC) //PRIVATE
 @AllArgsConstructor
-@ToString
+//@ToString
 @Entity
 @Table(name = "trellolist")
 public class Trellolist {
@@ -19,11 +20,11 @@ public class Trellolist {
     @Column(name="list_id")
     String listId;
 
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="board_id")
     Trelloboard trelloboard;
 
-    @OneToMany(mappedBy="trellolist", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy="trellolist", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     List<Trellocard> trellocards;
 
     public void add(Trellocard tempCard) {

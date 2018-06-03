@@ -6,10 +6,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC) //PRIVATE
 @AllArgsConstructor
-@ToString
+//@ToString
 @Entity
 @Table(name = "trelloboard")
 public class Trelloboard {
@@ -18,7 +20,7 @@ public class Trelloboard {
     @Column(name="board_id")
     String boardId;
 
-    @OneToMany(mappedBy="trelloboard", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy="trelloboard", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     List<Trellolist> trellolists;
 
     public void add(Trellolist tempList) {

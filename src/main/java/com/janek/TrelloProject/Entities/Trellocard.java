@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC) //PRIVATE
 @AllArgsConstructor
-@ToString
+//@ToString
 @Entity
 @Table(name = "trellocard")
 public class Trellocard {
@@ -18,7 +18,7 @@ public class Trellocard {
     @Column(name="card_id")
     String cardId;
 
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="list_id")
     Trellolist trellolist;
 

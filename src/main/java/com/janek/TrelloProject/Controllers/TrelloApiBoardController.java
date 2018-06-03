@@ -30,27 +30,39 @@ public class TrelloApiBoardController {
 
     @PostMapping("saveAllToDb")
     public List<Trelloboard> saveAllBoardsToDb(){
+        // TODO: 6/2/2018 make it work  
         ArrayList<Trelloboard> boards = new ArrayList<>();
         for(String boardId : trelloApi.getMyBoardIds()){
-            Map<String, String> trelloListIds = trelloApi.getMyListIds()
-                                                            .entrySet()
-                                                            .stream()
-                                                            .filter(e -> e.getValue().equals(boardId))
-                                                            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-            List<Trellolist> trellolistsList = new ArrayList<>();
-            for(Map.Entry<String, String> listId : trelloListIds.entrySet()){
-                trellolistsList.add(new Trellolist(listId.getKey(), new Trelloboard(boardId, null), null));
-            }
-            boards.add(new Trelloboard(boardId,trellolistsList));
+//            Map<String, String> trelloListIds = trelloApi.getMyListIds()
+//                                                            .entrySet()
+//                                                            .stream()
+//                                                            .filter(e -> e.getValue().equals(boardId))
+//                                                            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+//            List<Trellolist> trellolistsList = new ArrayList<>();
+//            for(Map.Entry<String, String> listId : trelloListIds.entrySet()){
+//                trellolistsList.add(new Trellolist(listId.getKey(), new Trelloboard(boardId, null), null));
+//            }
+//            boards.add(new Trelloboard(boardId,null));
+            boards.add(Trelloboard.builder().boardId(boardId).build());
+//            boards.add(new Trelloboard(boardId,trellolistsList));
+//            trelloboardRepository.save(new Trelloboard(boardId, trellolistsList));
+
+//            return trelloboardRepository.findAll();
         }
-        return trelloboardRepository.saveAll(boards);
+//        List<Trelloboard> trelloboards =
+                return trelloboardRepository.saveAll(boards);
+//        for(Trelloboard trelloboard : trelloboards){
+//            trelloboard.setTrellolists();
+//        }
+//        return trelloboardRepository.findAll();
     }
 
     @GetMapping("")
     public List<Trelloboard> getAllMyBoards(){
         ArrayList<Trelloboard> boards = new ArrayList<>();
         for(String boardId : trelloApi.getMyBoardIds()){
-            boards.add(new Trelloboard(boardId,null));
+//            boards.add(new Trelloboard(boardId,null));
+            boards.add(Trelloboard.builder().boardId(boardId).build());
         }
         return boards;
     }
