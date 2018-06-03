@@ -37,11 +37,11 @@ public class TrelloDbBoardControllerTest {
     }
 
     @Test
-    public void updateBoard() {
+    public void shouldUpdateBoard() {
     }
 
     @Test
-    public void createBoard() {
+    public void shouldCcreateBoard() {
         //@formatter:off
         given()
                 .port(port)
@@ -61,20 +61,21 @@ public class TrelloDbBoardControllerTest {
 
         Trelloboard trelloboard = trelloboardRepository.findByBoardId("123").get();
         Assertions.assertThat(trelloboard)
-                .isEqualToIgnoringGivenFields(Trelloboard.builder().boardId("123").name("cat").build(),"trellolists");
+                .isEqualToIgnoringGivenFields(Trelloboard.builder()
+                                                            .boardId("123")
+                                                            .name("cat").build(),
+                                                            "trellolists");
     }
 
     @Test
-    public void deleteBoard() {
+    public void shouldDeleteBoard() {
         //@formatter:off
         given()
                 .port(port)
-                .body(myBoardId)
-                .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                 .log().all()
 
                 .when()
-                .delete("TrelloDb/boards/")
+                .delete("TrelloDb/boards/" + myBoardId)
 
                 .then()
                 .log().all()
@@ -85,11 +86,29 @@ public class TrelloDbBoardControllerTest {
     }
 
     @Test
-    public void getBoard() {
+    public void shouldNotDeleteBoard() {
+        //@formatter:off
+        given()
+                .port(port)
+                .log().all()
+
+                .when()
+                .delete("TrelloDb/boards/" + "X")
+
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+        // should have location header
+        //@formatter:on
     }
 
     @Test
-    public void getAllMyBoards() {
+    public void shouldGetBoard() {
+    }
+
+    @Test
+    public void shouldGetAllMyBoards() {
     }
 
 }
