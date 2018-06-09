@@ -46,6 +46,7 @@ public class TrelloApiBoardControllerTest {
 
     @Test
     public void shouldSaveAllBoardsToDb(){
+        //@formatter:off
         RequestSpecification given = given()
                 .port(port)
                 .log().all();
@@ -59,6 +60,7 @@ public class TrelloApiBoardControllerTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
                 .body("name", hasItems("x", "TRNTL", "Przyjaciel SME", "Welcome Board", "Members", "Notes - devs only"));
+        //@formatter:on
     }
 
 }

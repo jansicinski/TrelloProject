@@ -1,4 +1,4 @@
-package com.janek.TrelloProject.Exceptions;
+package com.janek.TrelloProject.Errors;
 
 public class NullTrelloObjectIdException extends Exception {
     public NullTrelloObjectIdException(String message){

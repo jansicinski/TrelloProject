@@ -2,6 +2,8 @@ package com.janek.TrelloProject.Controllers;
 
 import com.janek.TrelloProject.Entities.Trelloboard;
 import com.janek.TrelloProject.Repositories.TrelloboardRepository;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -29,19 +32,20 @@ public class TrelloDbBoardControllerTest {
     String myBoardId;
     Trelloboard myTrelloboard;
 
-    @Before
-    public void setUp(){
-        trelloboardRepository.save(Trelloboard.builder().boardId("123").name("cat").build());
-        myTrelloboard = trelloboardRepository.findByBoardId("123").get();
-        myBoardId = myTrelloboard.getBoardId();
-    }
+//    @Before
+//    public void setUp(){
+//        trelloboardRepository.save(Trelloboard.builder().boardId("123").name("cat").build());
+//        myTrelloboard = trelloboardRepository.findByBoardId("123").get();
+//        myBoardId = myTrelloboard.getBoardId();
+//    }
 
     @Test
     public void shouldUpdateBoard() {
     }
 
     @Test
-    public void shouldCcreateBoard() {
+    public void shouldCreateBoard() {
+        myTrelloboard = Trelloboard.builder().boardId("123").name("cat").build();
         //@formatter:off
         given()
                 .port(port)
@@ -69,6 +73,9 @@ public class TrelloDbBoardControllerTest {
 
     @Test
     public void shouldDeleteBoard() {
+        trelloboardRepository.save(Trelloboard.builder().boardId("123").name("cat").build());
+        myTrelloboard = trelloboardRepository.findByBoardId("123").get();
+        myBoardId = myTrelloboard.getBoardId();
         //@formatter:off
         given()
                 .port(port)
@@ -86,7 +93,7 @@ public class TrelloDbBoardControllerTest {
     }
 
     @Test
-    public void shouldNotDeleteBoard() {
+    public void shouldNotFindBoardToDelete() {
         //@formatter:off
         given()
                 .port(port)
@@ -105,6 +112,24 @@ public class TrelloDbBoardControllerTest {
 
     @Test
     public void shouldGetBoard() {
+        trelloboardRepository.save(Trelloboard.builder().boardId("123").name("cat").build());
+        myTrelloboard = trelloboardRepository.findByBoardId("123").get();
+        myBoardId = myTrelloboard.getBoardId();
+        //@formatter:off
+        RequestSpecification given = given()
+                .port(port)
+                .log().all();
+
+        Response when = given
+                .when()
+                .get("TrelloDb/boards/" + myBoardId);
+
+        when.then()
+                .log().all()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .body("boardId", containsString("123"));
+        //@formatter:on
     }
 
     @Test

@@ -46,6 +46,7 @@ public class TrelloApiListControllerTest {
 
     @Test
     public void shouldSaveAllListsToDb() {
+        //@formatter:off
         RequestSpecification given = given()
                 .port(port)
                 .log().all();
@@ -59,6 +60,7 @@ public class TrelloApiListControllerTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
                 .body("listId", hasItems("5a54dc1ec9b64db92e6d23ca", "5a54dc1ec9b64db92e6d23cb", "5a54de08b62cff803bd7f42c"));
+        //@formatter:on
     }
 
 }
