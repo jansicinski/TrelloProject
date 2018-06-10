@@ -1,11 +1,13 @@
 package com.janek.TrelloProject.Controllers;
 
+import com.janek.TrelloProject.Commands.CreateTrelloboardCommand;
 import com.janek.TrelloProject.Entities.Trelloboard;
 import com.janek.TrelloProject.Services.TrelloboardService;
+import com.janek.TrelloProject.Utils.PathBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,13 +30,14 @@ public class TrelloDbBoardController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Trelloboard> createBoard(@RequestBody Trelloboard trelloboard){
+    public ResponseEntity<Trelloboard> createBoard(@Valid @RequestBody CreateTrelloboardCommand createTrelloboardCommand){
+        Trelloboard trelloboard = createTrelloboardCommand.buildTrelloboard();
         trelloboard = trelloboardService.create(trelloboard);
-        return ResponseEntity.created(URI.create("localhost:8080/TrelloDb/cards/" + trelloboard.getBoardId())).build();
+        return ResponseEntity.created(PathBuilder.pathWithId(trelloboard.getBoardId())).build();
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void>  deleteBoard(@PathVariable String id){
+    public ResponseEntity<Void> deleteBoard(@PathVariable String id){
         if(trelloboardService.delete(id)) {
             return ResponseEntity.noContent().build();
         } else

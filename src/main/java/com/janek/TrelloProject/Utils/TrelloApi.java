@@ -2,7 +2,7 @@ package com.janek.TrelloProject.Utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.janek.TrelloProject.Enums.TrelloObject;
-import com.janek.TrelloProject.Exceptions.NullTrelloObjectIdException;
+import com.janek.TrelloProject.Errors.NullTrelloObjectIdException;
 import javafx.util.Pair;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;

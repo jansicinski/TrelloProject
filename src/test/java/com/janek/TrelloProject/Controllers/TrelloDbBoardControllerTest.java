@@ -134,6 +134,21 @@ public class TrelloDbBoardControllerTest {
 
     @Test
     public void shouldGetAllMyBoards() {
+        //@formatter:off
+        RequestSpecification given = given()
+                .port(port)
+                .log().all();
+
+        Response when = given
+                .when()
+                .get("TrelloDb/boards/");
+
+        when.then()
+                .log().all()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .body(containsString("Welcome Board"));
+        //@formatter:on
     }
 
 }
