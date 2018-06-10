@@ -1,5 +1,6 @@
 package com.janek.TrelloProject.Controllers;
 
+import com.janek.TrelloProject.Commands.CreateTrelloboardCommand;
 import com.janek.TrelloProject.Entities.Trelloboard;
 import com.janek.TrelloProject.Repositories.TrelloboardRepository;
 import io.restassured.response.Response;
@@ -32,12 +33,12 @@ public class TrelloDbBoardControllerTest {
     String myBoardId;
     Trelloboard myTrelloboard;
 
-//    @Before
-//    public void setUp(){
+    @Before
+    public void setUp(){
 //        trelloboardRepository.save(Trelloboard.builder().boardId("123").name("cat").build());
 //        myTrelloboard = trelloboardRepository.findByBoardId("123").get();
 //        myBoardId = myTrelloboard.getBoardId();
-//    }
+    }
 
     @Test
     public void shouldUpdateBoard() {
@@ -45,11 +46,10 @@ public class TrelloDbBoardControllerTest {
 
     @Test
     public void shouldCreateBoard() {
-        myTrelloboard = Trelloboard.builder().boardId("123").name("cat").build();
         //@formatter:off
         given()
                 .port(port)
-                .body(myTrelloboard)
+                .body(new CreateTrelloboardCommand("123", "cat"))
                 .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                 .log().all()
 
@@ -88,7 +88,6 @@ public class TrelloDbBoardControllerTest {
                 .log().all()
                 .assertThat()
                 .statusCode(HttpStatus.NO_CONTENT.value());
-        // should have location header
         //@formatter:on
     }
 
@@ -106,7 +105,6 @@ public class TrelloDbBoardControllerTest {
                 .log().all()
                 .assertThat()
                 .statusCode(HttpStatus.NOT_FOUND.value());
-        // should have location header
         //@formatter:on
     }
 
