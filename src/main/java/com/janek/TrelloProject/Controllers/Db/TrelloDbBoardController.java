@@ -1,4 +1,4 @@
-package com.janek.TrelloProject.Controllers;
+package com.janek.TrelloProject.Controllers.Db;
 
 import com.janek.TrelloProject.Commands.CreateTrelloboardCommand;
 import com.janek.TrelloProject.Entities.Trelloboard;

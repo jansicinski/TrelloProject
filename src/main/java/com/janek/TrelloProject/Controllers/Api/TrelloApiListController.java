@@ -1,4 +1,4 @@
-package com.janek.TrelloProject.Controllers;
+package com.janek.TrelloProject.Controllers.Api;
 
 import com.janek.TrelloProject.Entities.Trelloboard;
 import com.janek.TrelloProject.Entities.Trellolist;

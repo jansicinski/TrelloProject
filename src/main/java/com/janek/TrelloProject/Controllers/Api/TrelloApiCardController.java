@@ -1,4 +1,4 @@
-package com.janek.TrelloProject.Controllers;
+package com.janek.TrelloProject.Controllers.Api;
 
 import com.janek.TrelloProject.Utils.TrelloApi;
 import org.springframework.beans.factory.annotation.Autowired;
