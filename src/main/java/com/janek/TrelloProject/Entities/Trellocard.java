@@ -13,7 +13,7 @@ import javax.persistence.*;
 //@ToString
 @Entity
 @Table(name = "trellocard")
-public class Trellocard {
+public class Trellocard implements Trelloentity{
 
     @Id
     @Column(name="card_id")

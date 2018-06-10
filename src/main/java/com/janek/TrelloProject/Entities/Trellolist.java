@@ -16,7 +16,7 @@ import java.util.List;
 //@ToString
 @Entity
 @Table(name = "trellolist")
-public class Trellolist {
+public class Trellolist implements Trelloentity{
 
     @Id
     @Column(name="list_id")
