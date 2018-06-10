@@ -4,7 +4,7 @@ import com.janek.TrelloProject.Entities.Trelloentity;
 
 import java.util.List;
 
-public interface Trellocrudable {
+public interface TrelloCrudable {
     Trelloentity create(Trelloentity trelloentity);
     List<Trelloentity> read(String id);
     List<Trelloentity> read();
