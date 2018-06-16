@@ -1,6 +1,8 @@
 package com.janek.TrelloProject.Controllers;
 
 import com.janek.TrelloProject.Services.TrelloboardService;
+import com.janek.TrelloProject.Services.TrellocardService;
+import com.janek.TrelloProject.Services.TrellolistService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +15,14 @@ public class ViewController {
 
     private final TrelloboardService trelloboardService;
 
-    public ViewController(TrelloboardService trelloboardService) {
+    private final TrellolistService trellolistService;
+
+    private final TrellocardService trellocardService;
+
+    public ViewController(TrelloboardService trelloboardService, TrellolistService trellolistService, TrellocardService trellocardService) {
         this.trelloboardService = trelloboardService;
+        this.trellolistService = trellolistService;
+        this.trellocardService = trellocardService;
     }
 
     @GetMapping("greeting")
@@ -27,6 +35,18 @@ public class ViewController {
     public String boards(Model model) {
         model.addAttribute("boards", trelloboardService.read());
         return "boards";
+    }
+
+    @GetMapping("lists")
+    public String lists(Model model) {
+        model.addAttribute("lists", trellolistService.read());
+        return "lists";
+    }
+
+    @GetMapping("cards")
+    public String cards(Model model) {
+        model.addAttribute("cards", trellocardService.read());
+        return "cards";
     }
 
 }

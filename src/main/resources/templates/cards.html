@@ -9,12 +9,12 @@
 
     <table class="w3-table w3-striped">
         <tr class="w3-green">
-            <th>Board Name</th>
-            <th>Board ID</th>
+            <th>Card ID</th>
+            <th>List</th>
         </tr>
-        <tr th:each="board : ${boards}">
-            <td th:text="${board.getName()}"></td>
-            <td th:text="${board.getBoardId()}"></td>
+        <tr th:each="card : ${cards}">
+            <td th:text="${card.getCardId()}"></td>
+            <td th:text="${card.getTrellolist()}"></td>
         </tr>
     </table>
 

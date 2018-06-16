@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC) //PRIVATE
@@ -23,5 +24,12 @@ public class Trellocard implements Trelloentity{
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name="list_id")
     Trellolist trellolist;
+
+    @Override
+    public String toString() {
+        return "Trellocard{" +
+                "cardId='" + cardId + '\'' +
+                '}';
+    }
 
 }

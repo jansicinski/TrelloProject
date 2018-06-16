@@ -35,4 +35,12 @@ public class Trelloboard implements Trelloentity{
         tempList.setTrelloboard(this);
     }
 
+    @Override
+    public String toString() {
+        return "Trelloboard{" +
+                "boardId='" + boardId + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
 }

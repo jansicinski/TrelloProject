@@ -39,4 +39,12 @@ public class Trellolist implements Trelloentity{
         tempCard.setTrellolist(this);
     }
 
+    @Override
+    public String toString() {
+        return "Trellolist{" +
+                "listId='" + listId + '\'' +
+                ", trelloboard=" + trelloboard +
+                '}';
+    }
+
 }
