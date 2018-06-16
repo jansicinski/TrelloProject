@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC) //PRIVATE
 @AllArgsConstructor
-//@ToString
 @Entity
 @Table(name = "trellocard")
 public class Trellocard implements Trelloentity{

@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC) //PRIVATE
 @AllArgsConstructor
-//@ToString
 @Entity
 @Table(name = "trelloboard")
 public class Trelloboard implements Trelloentity{
