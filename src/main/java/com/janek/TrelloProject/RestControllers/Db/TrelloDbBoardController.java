@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("TrelloDb/boards/")
+@RequestMapping("TrelloDb/boards/swagger")
 public class TrelloDbBoardController {
 
     private final TrelloboardService trelloboardService;
