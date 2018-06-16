@@ -39,12 +39,12 @@ class ErrorResponse {
 
     static ErrorResponse of(HttpStatus status, String message, String path, List<ValidationError> validationErrors){
         return new ErrorResponse(
-                LocalDateTime.now(),
-                status.value(),
-                status.getReasonPhrase(),
-                message,
-                path,
-                validationErrors
+            LocalDateTime.now(),
+            status.value(),
+            status.getReasonPhrase(),
+            message,
+            path,
+            validationErrors
         );
     }
 
