@@ -12,11 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-
 @Getter
-
 class ErrorResponse {
 
     private LocalDateTime timestamp;
@@ -32,47 +29,28 @@ class ErrorResponse {
     private List<ValidationError> validationErrors;
 
 
-
     static ErrorResponse of(HttpStatus status, String message, String path){
-
         return of(status, message, path, new ArrayList<>());
-
     }
 
     public ResponseEntity<ErrorResponse> toResponseEntity() {
-
         return ResponseEntity.status(status).body(this);
-
     }
 
     static ErrorResponse of(HttpStatus status, String message, String path, List<ValidationError> validationErrors){
-
         return new ErrorResponse(
-
                 LocalDateTime.now(),
-
                 status.value(),
-
                 status.getReasonPhrase(),
-
                 message,
-
                 path,
-
                 validationErrors
-
         );
-
     }
 
-
-
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
-
     @AllArgsConstructor
-
     @Getter
-
     static class ValidationError {
 
         private String fieldName;
