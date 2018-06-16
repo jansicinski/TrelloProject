@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface TrellolistRepository extends JpaRepository<Trellolist, Long> {
 
-    Optional<Trellolist> findByBoardId(String list_id);
-    void deleteTrellolistByBoardId(String list_id);
+    Optional<Trellolist> findByListId(String list_id);
+    void deleteTrellolistByListId(String list_id);
 
 }
