@@ -19,7 +19,7 @@ public class TrelloApiBoardControllerTestWiremock {
     public WireMockRule wireMockRule = new WireMockRule(port);
 
     @Test
-    public void shouldReturnMyBoards(){
+    public void shouldGetAllMyBoards(){
         wireMockRule.stubFor(get(urlEqualTo("/TrelloApi/boards/"))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "application/json")
