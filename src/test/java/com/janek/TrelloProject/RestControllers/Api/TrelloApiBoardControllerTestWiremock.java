@@ -1,18 +1,17 @@
-package com.janek.TrelloProject.Utils;
+package com.janek.TrelloProject.RestControllers.Api;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Rule;
 import org.junit.Test;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.containsString;
 
-public class TrelloApiTest {
+public class TrelloApiBoardControllerTestWiremock {
 
     private int port = 8081;
 
@@ -25,7 +24,7 @@ public class TrelloApiTest {
             .willReturn(aResponse()
                 .withHeader("Content-Type", "application/json")
                 .withBody("{\n" +
-                        "\"boardId\": \"1\",\n" +
+                        "\"boardId\": \"12\",\n" +
                         "\"name\": \"catcat\"\n" +
                         "}")));
 
@@ -43,7 +42,7 @@ public class TrelloApiTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
                 .body(containsString("{\n" +
-                        "\"boardId\": \"1\",\n" +
+                        "\"boardId\": \"12\",\n" +
                         "\"name\": \"catcat\"\n" +
                         "}"));
         //@formatter:on
