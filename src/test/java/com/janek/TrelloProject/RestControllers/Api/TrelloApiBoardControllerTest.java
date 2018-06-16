@@ -18,9 +18,6 @@ import static org.hamcrest.CoreMatchers.hasItems;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TrelloApiBoardControllerTest {
 
-    @Autowired
-    TrelloboardRepository trelloboardRepository;
-
     @LocalServerPort
     private int port;
 
