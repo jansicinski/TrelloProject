@@ -1,11 +1,9 @@
 package com.janek.TrelloProject.RestControllers.Api;
 
-import com.janek.TrelloProject.Repositories.TrelloboardRepository;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
