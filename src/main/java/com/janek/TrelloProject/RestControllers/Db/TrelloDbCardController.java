@@ -1,4 +1,4 @@
-package com.janek.TrelloProject.Controllers.Db;
+package com.janek.TrelloProject.RestControllers.Db;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

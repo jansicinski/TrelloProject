@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Boards</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <tr th:each="board : ${boards}">
+        <td th:text="${board.getName()}">Board Name</td>
+        <td th:text="${board.getBoardId()}">Board ID</td>
+    </tr>
+</body>
+</html>
