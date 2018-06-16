@@ -5,6 +5,8 @@ import com.janek.TrelloProject.Enums.TrelloObject;
 import com.janek.TrelloProject.Errors.NullTrelloObjectIdException;
 import javafx.util.Pair;
 import lombok.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +26,8 @@ import static com.janek.TrelloProject.Enums.TrelloObject.*;
 @AllArgsConstructor
 @ToString
 public class TrelloApi {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrelloApi.class);
 
     @Value("${trelloproject.key}")
     private  String key;
