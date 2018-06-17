@@ -32,20 +32,29 @@ public class ViewController {
     }
 
     @GetMapping("boards")
-    public String boards(Model model) {
-        model.addAttribute("boards", trelloboardService.read());
+    public String boards(@RequestParam(name="boardId", required=false) String boardId, Model model) {
+        if(boardId == null)
+            model.addAttribute("boards", trelloboardService.read());
+        else
+            model.addAttribute("boards", trelloboardService.read(boardId));
         return "boards";
     }
 
     @GetMapping("lists")
-    public String lists(Model model) {
-        model.addAttribute("lists", trellolistService.read());
+    public String lists(@RequestParam(name="listId", required=false) String listId, Model model) {
+        if(listId == null)
+            model.addAttribute("lists", trellolistService.read());
+        else
+            model.addAttribute("lists", trellolistService.read(listId));
         return "lists";
     }
 
     @GetMapping("cards")
-    public String cards(Model model) {
-        model.addAttribute("cards", trellocardService.read());
+    public String cards(@RequestParam(name="cardId", required=false) String cardId, Model model) {
+        if(cardId == null)
+            model.addAttribute("cards", trellocardService.read());
+        else
+            model.addAttribute("cards", trellocardService.read(cardId));
         return "cards";
     }
 

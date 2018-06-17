@@ -41,6 +41,7 @@ public class TrelloApiBoardControllerTestWiremock {
 
     @Test
     public void shouldGetAllMyBoards(){
+        //TODO: make WireMock replace true API call because this doesn't work
         wireMockRuleMe.stubFor(get(urlMatching("/members/me*"))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "application/json")
