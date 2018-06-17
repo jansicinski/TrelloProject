@@ -20,7 +20,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.janek.TrelloProject.RestControllers"))
-          //      .paths(PathSelectors.regex("/swagger*"))
+          //      .paths(PathSelectors.regex("/Swagger*"))
                 .build()
                 .apiInfo(apiInfo());
     }

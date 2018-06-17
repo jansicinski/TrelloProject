@@ -8,7 +8,7 @@ public class SwaggerController {
 
     @RequestMapping(value = "/documentation")
     public String index(){
-        return "redirect:swagger-ui.html";
+        return "redirect:Swagger-ui.html";
     }
 
 }

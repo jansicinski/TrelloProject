@@ -107,7 +107,7 @@
 			<version>1.5</version>
 		</dependency>
 
-		<!-- swagger -->
+		<!-- Swagger -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
