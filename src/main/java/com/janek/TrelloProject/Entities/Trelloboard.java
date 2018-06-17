@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "trelloboard")
-public class Trelloboard implements Trelloentity{
+public class Trelloboard {
 
     @Id
     @Column(name="board_id")
