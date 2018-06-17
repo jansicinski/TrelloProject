@@ -30,13 +30,13 @@ public class TrelloApi {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrelloApi.class);
 
     @Value("${trelloproject.key}")
-    private  String key;
+    private String key;
 
     @Value("${trelloproject.token}")
-    private  String token;
+    private String token;
 
     @Value("${trelloproject.base}")
-    private  String trelloAPIBaseURL;
+    private String trelloAPIBaseURL;
 
     private String buildTrelloApiUrl(String trelloObjectGroup, String trelloObjectId, String trelloSecondaryObject){
         Map<String, String> parameters = new HashMap<>();
