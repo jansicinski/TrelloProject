@@ -1,8 +1,6 @@
 package com.janek.TrelloProject.Services;
 
-import com.janek.TrelloProject.Entities.Trelloboard;
 import com.janek.TrelloProject.Entities.Trellolist;
-import com.janek.TrelloProject.Repositories.TrelloboardRepository;
 import com.janek.TrelloProject.Repositories.TrellolistRepository;
 import org.springframework.stereotype.Service;
 
