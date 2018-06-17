@@ -12,11 +12,13 @@
             <th>List ID</th>
             <th>Board Name</th>
             <th>Cards</th>
+            <th>Action</th>
         </tr>
         <tr th:each="list : ${lists}">
             <td th:text="${list.getListId()}"></td>
             <td th:text="${list.getTrelloboard().getName()}"></td>
             <td th:text="${list.getTrellocards()}"></td>
+            <td><a class="w3-button w3-black" th:href="@{/TrelloView/boards(boardId=${list.getTrelloboard().getBoardId()})}">Go to Board</a></td>
         </tr>
     </table>
 
