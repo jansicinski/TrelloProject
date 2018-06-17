@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -25,17 +26,18 @@ public class TrelloApiBoardControllerTestWiremock {
     @Value("${trelloproject.token}")
     private String token;
 
-    private int springPort = 8080;
+    @LocalServerPort
+    private int port;
 
-    private int wireMockTrelloMePort = 8020;
+    private int mePort = 8010;
 
-    private int wireMockTrelloBoardPort = 8030;
-
-    @Rule
-    public WireMockRule wireMockRuleMe = new WireMockRule(wireMockTrelloMePort);
+    private int boardPort = 8020;
 
     @Rule
-    public WireMockRule wireMockRuleBoard = new WireMockRule(wireMockTrelloBoardPort);
+    public WireMockRule wireMockRuleMe = new WireMockRule(mePort);
+
+    @Rule
+    public WireMockRule wireMockRuleBoard = new WireMockRule(boardPort);
 
     @Test
     public void shouldGetAllMyBoards(){
@@ -51,7 +53,7 @@ public class TrelloApiBoardControllerTestWiremock {
 
         //@formatter:off
         RequestSpecification given = given()
-                .port(springPort)
+                .port(port)
                 .log().all();
 
         Response when = given
