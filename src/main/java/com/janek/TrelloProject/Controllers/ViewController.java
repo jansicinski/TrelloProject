@@ -19,7 +19,9 @@ public class ViewController {
 
     private final TrellocardService trellocardService;
 
-    public ViewController(TrelloboardService trelloboardService, TrellolistService trellolistService, TrellocardService trellocardService) {
+    public ViewController(TrelloboardService trelloboardService,
+                          TrellolistService trellolistService,
+                          TrellocardService trellocardService) {
         this.trelloboardService = trelloboardService;
         this.trellolistService = trellolistService;
         this.trellocardService = trellocardService;
