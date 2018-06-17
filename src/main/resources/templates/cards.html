@@ -16,7 +16,12 @@
         <tr th:each="card : ${cards}">
             <td th:text="${card.getCardId()}"></td>
             <td th:text="${card.getTrellolist()}"></td>
-            <td><a class="w3-button w3-black" th:href="@{/TrelloView/lists(listId=${card.getTrellolist().getListId()})}">Go to List</a></td>
+            <td>
+                <a class="w3-button w3-black"
+                   th:href="@{/TrelloView/lists(listId=${card.getTrellolist().getListId()})}">
+                    Go to List
+                </a>
+            </td>
         </tr>
     </table>
 
