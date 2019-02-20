@@ -139,8 +139,7 @@ public class TrelloApi {
             e.printStackTrace();
         }
 
-        String result = content.toString();
-        return result;
+        return content.toString();
     }
 
     private HashMap<String,Object>[] getObjectHashMap(TrelloObject trelloObjectGroup,

@@ -2,6 +2,7 @@ package com.janek.TrelloProject.Services;
 
 import com.janek.TrelloProject.Entities.Trellolist;
 import com.janek.TrelloProject.Repositories.TrellolistRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -10,13 +11,10 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class TrellolistService {
 
     private final TrellolistRepository trellolistRepository;
-
-    public TrellolistService(TrellolistRepository trellolistRepository) {
-        this.trellolistRepository = trellolistRepository;
-    }
 
     public boolean delete(String boardId){
         if(trellolistRepository.findByListId(boardId).isPresent()) {
@@ -27,29 +25,16 @@ public class TrellolistService {
     }
 
     public Trellolist update(Trellolist trellolist){
-        trellolist = trellolistRepository.save(trellolist);
-        Optional<Trellolist> trellolistOptional = trellolistRepository.findByListId(trellolist.getListId());
-        if (trellolistOptional.isPresent()) {
-            return trellolistOptional.get();
-        } else
-            return null;
+        return updateOrCreate(trellolist);
     }
 
     public Trellolist create(Trellolist trellolist){
-        trellolist = trellolistRepository.save(trellolist);
-        Optional<Trellolist> trellolistOptional = trellolistRepository.findByListId(trellolist.getListId());
-        if (trellolistOptional.isPresent()) {
-            return trellolistOptional.get();
-        } else
-            return null;
+        return updateOrCreate(trellolist);
     }
 
     public Trellolist read(String listId){
         Optional<Trellolist> trellolistOptional = trellolistRepository.findByListId(listId);
-        if (trellolistOptional.isPresent()) {
-            return trellolistOptional.get();
-        } else
-            return null;
+        return trellolistOptional.orElse(null);
     }
 
     public List<Trellolist> read(){
@@ -58,6 +43,12 @@ public class TrellolistService {
             return trellolists;
         } else
             return null;
+    }
+
+    private Trellolist updateOrCreate(Trellolist trellolist){
+        trellolist = trellolistRepository.save(trellolist);
+        Optional<Trellolist> trellolistOptional = trellolistRepository.findByListId(trellolist.getListId());
+        return trellolistOptional.orElse(null);
     }
 
 }

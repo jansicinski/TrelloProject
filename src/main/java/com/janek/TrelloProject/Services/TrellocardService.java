@@ -2,6 +2,7 @@ package com.janek.TrelloProject.Services;
 
 import com.janek.TrelloProject.Entities.Trellocard;
 import com.janek.TrelloProject.Repositories.TrellocardRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -10,13 +11,10 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class TrellocardService {
 
     private final TrellocardRepository trellocardRepository;
-
-    public TrellocardService(TrellocardRepository trellocardRepository) {
-        this.trellocardRepository = trellocardRepository;
-    }
 
     public boolean delete(String cardId){
         if(trellocardRepository.findByCardId(cardId).isPresent()) {
@@ -27,29 +25,16 @@ public class TrellocardService {
     }
 
     public Trellocard update(Trellocard trellocard){
-        trellocard = trellocardRepository.save(trellocard);
-        Optional<Trellocard> trellocardOptional = trellocardRepository.findByCardId(trellocard.getCardId());
-        if (trellocardOptional.isPresent()) {
-            return trellocardOptional.get();
-        } else
-            return null;
+        return updateOrCreate(trellocard);
     }
 
     public Trellocard create(Trellocard trellocard){
-        trellocard = trellocardRepository.save(trellocard);
-        Optional<Trellocard> trellocardOptional = trellocardRepository.findByCardId(trellocard.getCardId());
-        if (trellocardOptional.isPresent()) {
-            return trellocardOptional.get();
-        } else
-            return null;
+        return updateOrCreate(trellocard);
     }
 
     public Trellocard read(String cardId){
         Optional<Trellocard> trellocardOptional = trellocardRepository.findByCardId(cardId);
-        if (trellocardOptional.isPresent()) {
-            return trellocardOptional.get();
-        } else
-            return null;
+        return trellocardOptional.orElse(null);
     }
 
     public List<Trellocard> read(){
@@ -58,6 +43,12 @@ public class TrellocardService {
             return trellocards;
         } else
             return null;
+    }
+
+    private Trellocard updateOrCreate(Trellocard trellocard){
+        trellocard = trellocardRepository.save(trellocard);
+        Optional<Trellocard> trellocardOptional = trellocardRepository.findByCardId(trellocard.getCardId());
+        return trellocardOptional.orElse(null);
     }
 
 }

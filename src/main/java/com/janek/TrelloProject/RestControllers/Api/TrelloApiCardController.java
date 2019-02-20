@@ -1,13 +1,11 @@
 package com.janek.TrelloProject.RestControllers.Api;
 
-import com.janek.TrelloProject.Entities.Trelloboard;
 import com.janek.TrelloProject.Entities.Trellocard;
 import com.janek.TrelloProject.Entities.Trellolist;
-import com.janek.TrelloProject.Repositories.TrelloboardRepository;
 import com.janek.TrelloProject.Repositories.TrellocardRepository;
 import com.janek.TrelloProject.Repositories.TrellolistRepository;
 import com.janek.TrelloProject.Utils.TrelloApi;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("TrelloApi/cards/")
+@AllArgsConstructor
 public class TrelloApiCardController {
 
     private final TrelloApi trelloApi;
@@ -25,14 +24,6 @@ public class TrelloApiCardController {
     private final TrellolistRepository trellolistRepository;
 
     private final TrellocardRepository trellocardRepository;
-
-    public TrelloApiCardController(TrelloApi trelloApi,
-                                   TrellolistRepository trellolistRepository,
-                                   TrellocardRepository trellocardRepository) {
-        this.trelloApi = trelloApi;
-        this.trellolistRepository = trellolistRepository;
-        this.trellocardRepository = trellocardRepository;
-    }
 
     @GetMapping("")
     public String getAllMyCards(){

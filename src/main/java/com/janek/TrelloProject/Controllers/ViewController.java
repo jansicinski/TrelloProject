@@ -3,6 +3,7 @@ package com.janek.TrelloProject.Controllers;
 import com.janek.TrelloProject.Services.TrelloboardService;
 import com.janek.TrelloProject.Services.TrellocardService;
 import com.janek.TrelloProject.Services.TrellolistService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("TrelloView/")
+@AllArgsConstructor
 public class ViewController {
 
     private final TrelloboardService trelloboardService;
@@ -18,14 +20,6 @@ public class ViewController {
     private final TrellolistService trellolistService;
 
     private final TrellocardService trellocardService;
-
-    public ViewController(TrelloboardService trelloboardService,
-                          TrellolistService trellolistService,
-                          TrellocardService trellocardService) {
-        this.trelloboardService = trelloboardService;
-        this.trellolistService = trellolistService;
-        this.trellocardService = trellocardService;
-    }
 
     @GetMapping("greeting")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {

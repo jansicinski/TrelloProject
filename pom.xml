@@ -21,8 +21,10 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.9</java.version>
+		<java.version>1.8</java.version> <!--1.9-->
+		<!--<java.home>/usr/lib/jvm/java-8-oracle</java.home>-->
         <springfox-swagger2.version>2.6.0</springfox-swagger2.version>
+		<my.package>com.janek.TrelloProject</my.package>
 	</properties>
 
 	<dependencies>
@@ -126,14 +128,34 @@
 			<!--<artifactId>spring-boot-starter-security</artifactId>-->
 		<!--</dependency>-->
 
+
+		<!--<dependency>-->
+			<!--<groupId>com.oracle</groupId>-->
+			<!--<artifactId>javafx</artifactId>-->
+			<!--<version>2.2</version>-->
+			<!--<systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>-->
+			<!--<scope>system</scope>-->
+		<!--</dependency>-->
+
     </dependencies>
 
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<!--<plugin>-->
+				<!--<groupId>com.zenjava</groupId>-->
+				<!--<artifactId>javafx-maven-plugin</artifactId>-->
+				<!--<version>8.8.3</version>-->
+				<!--<configuration>-->
+					<!--<mainClass>${my.package}</mainClass>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
+
 		</plugins>
 	</build>
 

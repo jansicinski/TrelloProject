@@ -4,6 +4,7 @@ import com.janek.TrelloProject.Commands.CreateTrelloboardCommand;
 import com.janek.TrelloProject.Entities.Trelloboard;
 import com.janek.TrelloProject.Services.TrelloboardService;
 import com.janek.TrelloProject.Utils.PathBuilder;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("TrelloDb/boards/")
+@AllArgsConstructor
 public class TrelloDbBoardController {
 
     private final TrelloboardService trelloboardService;
-
-    public TrelloDbBoardController(TrelloboardService trelloboardService) {
-        this.trelloboardService = trelloboardService;
-    }
 
     @PutMapping("")
     public ResponseEntity<Trelloboard> updateBoard(@RequestBody Trelloboard trelloboard){

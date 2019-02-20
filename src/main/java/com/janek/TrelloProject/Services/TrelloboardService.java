@@ -2,6 +2,7 @@ package com.janek.TrelloProject.Services;
 
 import com.janek.TrelloProject.Entities.Trelloboard;
 import com.janek.TrelloProject.Repositories.TrelloboardRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -10,13 +11,11 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class TrelloboardService {
 
     private final TrelloboardRepository trelloboardRepository;
 
-    public TrelloboardService(TrelloboardRepository trelloboardRepository) {
-        this.trelloboardRepository = trelloboardRepository;
-    }
 
     public boolean delete(String boardId){
         if(trelloboardRepository.findByBoardId(boardId).isPresent()) {
@@ -27,29 +26,16 @@ public class TrelloboardService {
     }
 
     public Trelloboard update(Trelloboard trelloboard){
-        trelloboard = trelloboardRepository.save(trelloboard);
-        Optional<Trelloboard> trelloboardOptional = trelloboardRepository.findByBoardId(trelloboard.getBoardId());
-        if (trelloboardOptional.isPresent()) {
-            return trelloboardOptional.get();
-        } else
-            return null;
+        return updateOrCreate(trelloboard);
     }
 
     public Trelloboard create(Trelloboard trelloboard){
-        trelloboard = trelloboardRepository.save(trelloboard);
-        Optional<Trelloboard> trelloboardOptional = trelloboardRepository.findByBoardId(trelloboard.getBoardId());
-        if (trelloboardOptional.isPresent()) {
-            return trelloboardOptional.get();
-        } else
-            return null;
+        return updateOrCreate(trelloboard);
     }
 
     public Trelloboard read(String boardId){
         Optional<Trelloboard> trelloboardOptional = trelloboardRepository.findByBoardId(boardId);
-        if (trelloboardOptional.isPresent()) {
-            return trelloboardOptional.get();
-        } else
-            return null;
+        return trelloboardOptional.orElse(null);
     }
 
     public List<Trelloboard> read(){
@@ -58,6 +44,12 @@ public class TrelloboardService {
             return trelloboards;
         } else
             return null;
+    }
+
+    private Trelloboard updateOrCreate(Trelloboard trelloboard){
+        trelloboard = trelloboardRepository.save(trelloboard);
+        Optional<Trelloboard> trelloboardOptional = trelloboardRepository.findByBoardId(trelloboard.getBoardId());
+        return trelloboardOptional.orElse(null);
     }
 
 }

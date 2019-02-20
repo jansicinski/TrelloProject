@@ -5,6 +5,7 @@ import com.janek.TrelloProject.Entities.Trellolist;
 import com.janek.TrelloProject.Repositories.TrelloboardRepository;
 import com.janek.TrelloProject.Repositories.TrellolistRepository;
 import com.janek.TrelloProject.Utils.TrelloApi;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("TrelloApi/lists/")
+@AllArgsConstructor
 public class TrelloApiListController {
 
     private final TrelloApi trelloApi;
@@ -22,14 +24,6 @@ public class TrelloApiListController {
     private final TrelloboardRepository trelloboardRepository;
 
     private final TrellolistRepository trellolistRepository;
-
-    public TrelloApiListController(TrelloApi trelloApi,
-                                   TrellolistRepository trellolistRepository,
-                                   TrelloboardRepository trelloboardRepository) {
-        this.trelloApi = trelloApi;
-        this.trellolistRepository = trellolistRepository;
-        this.trelloboardRepository = trelloboardRepository;
-    }
 
     @GetMapping("")
     public String getAllMyLists(){
