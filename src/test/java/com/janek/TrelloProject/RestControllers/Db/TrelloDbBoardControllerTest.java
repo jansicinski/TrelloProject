@@ -30,8 +30,8 @@ public class TrelloDbBoardControllerTest {
     @LocalServerPort
     private int port;
 
-    String myBoardId;
-    Trelloboard myTrelloboard;
+    private String myBoardId;
+    private Trelloboard myTrelloboard;
 
     @Before
     public void setUp(){
