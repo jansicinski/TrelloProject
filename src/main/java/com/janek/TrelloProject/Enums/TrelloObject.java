@@ -1,5 +1,8 @@
 package com.janek.TrelloProject.Enums;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public enum  TrelloObject {
 
     MEMBERS("members"),
@@ -9,9 +12,5 @@ public enum  TrelloObject {
     ME("me");
 
     private final String objectName;
-
-    TrelloObject(String objectName) {
-        this.objectName = objectName;
-    }
 
 }
